@@ -45,8 +45,8 @@ public class EndActivity extends AppCompatActivity {
     }
     public void checkHighScore(){
         DataRow row = dataBase.getHighScoreFromDB(level);
-        if (row != null && row.getLevel() != 0){
-            if (row.getScore() > score)
+        if (row != null){
+            if (row.getScore() >= score)
                 new End_UI_Enabler(this, true,score);
             else
                 new End_UI_Enabler(this, false,score);

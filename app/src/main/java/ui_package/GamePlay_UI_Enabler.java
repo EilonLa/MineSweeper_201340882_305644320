@@ -112,6 +112,7 @@ public class GamePlay_UI_Enabler {
     }
 
     public void setRestartButton() {
+        restartButton.setBackgroundResource(R.mipmap.restart);
         restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

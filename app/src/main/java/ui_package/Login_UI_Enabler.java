@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import db.DataRow;
 import activities.HighScores;
@@ -18,6 +19,7 @@ import com.example.cdv.minesweeper_eilonlaor_dvirtwina.R;
 
 public class Login_UI_Enabler {
     private EditText nameText;
+    private TextView welcome;
     private CheckBox easy;
     private CheckBox medium;
     private CheckBox hard;
@@ -35,7 +37,12 @@ public class Login_UI_Enabler {
         medium   = (CheckBox) loginActivity.findViewById(R.id.checkbox_medium);
         hard     = (CheckBox) loginActivity.findViewById(R.id.checkbox_hard);
         start    = (Button)loginActivity.findViewById(R.id.btn_start);
+        start.setBackgroundResource(R.mipmap.start);
+        this.welcome  = (TextView) loginActivity.findViewById(R.id.welcome);
+        this.welcome.setBackgroundResource(R.mipmap.ic_launcher);
+
         seeHighScores = (Button) loginActivity.findViewById(R.id.btn_scores);
+        seeHighScores.setBackgroundResource(R.mipmap.highscores);
 
         if (lastGame != null){
             nameText.setText(lastGame.getmName());
@@ -117,9 +124,6 @@ public class Login_UI_Enabler {
                 loginActivity.startActivity(i);
             }
         });
-    }
-    public void onCheckboxClicked(){
-
     }
 
 }

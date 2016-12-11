@@ -38,6 +38,7 @@ public class HighScores_UI_Enabler {
         this.medium = (CheckBox) activity.findViewById(R.id.checkbox_medium_scores);
         this.hard = (CheckBox) activity.findViewById(R.id.checkbox_hard_scores);
         this.back =  (Button) activity.findViewById(R.id.btn_back);
+        back.setBackgroundResource(R.mipmap.back);
         dataBase = new DBOperator(activity);
 
 
