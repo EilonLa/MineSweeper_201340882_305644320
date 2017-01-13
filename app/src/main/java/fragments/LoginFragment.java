@@ -36,6 +36,7 @@ public class LoginFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         lastGame = LoginActivity.database.getLastGameFromDB();
+        setRetainInstance(true);
         ui = new Login_UI_Enabler((LoginActivity) getActivity(), lastGame);
     }
 

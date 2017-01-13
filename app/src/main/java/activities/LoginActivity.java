@@ -32,6 +32,7 @@ import fragments.LoginFragment;
 public class LoginActivity extends FragmentActivity implements LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    public static boolean initiated = false;
     public static DBOperator database;
     public static Location lastLocation;
     private LocationRequest locationRequest;
@@ -60,13 +61,15 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         Log.d("LoginActivity", "onRequestPermissionsResult:");
+
         View view = findViewById(R.id.container);
         if (requestCode == 0) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Snackbar.make(view, "Location permission was granted. Connecting...",
                         Snackbar.LENGTH_LONG)
                         .show();
-                googleApiClient.connect();
+                if (!googleApiClient.isConnected())
+                    googleApiClient.connect();
             } else {
                 Snackbar.make(view, "Location permission request was denied.",
                         Snackbar.LENGTH_LONG)
@@ -82,6 +85,7 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
             googleApiClient.connect();
     }
 
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.d("LoginActivity", "onConnected:");
@@ -89,13 +93,15 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
             //permission is availble
             lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if ( lastLocation == null) {
+                Log.d("lastLocation", "null");
                 LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
             } else {
-                Toast.makeText(this, "Location saved! Lat=" +  lastLocation.getLatitude() + " long=" +  lastLocation.getLongitude(), Toast.LENGTH_LONG);
-            }
-
-            if ( lastLocation != null) {
+                Toast.makeText(this, "Location saved! Lat=" + lastLocation.getLatitude() + " long=" + lastLocation.getLongitude(), Toast.LENGTH_LONG).show();
                 locationGranted();
+            }
+            if ( lastLocation != null) {
+            } else {
+                Toast.makeText(this, "cant use location on this device", Toast.LENGTH_LONG).show();
             }
         } else {
             requestPermissionToLocation();
@@ -128,17 +134,23 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
     public void locationGranted() {
         Log.d("LoginActivity", "locationGranted:");
         if ( lastLocation != null) {
-            loginFragment = new LoginFragment();
-            getFragmentManager().beginTransaction().add(R.id.main_fragment, loginFragment).commit();
+            if (!initiated) {
+                initiated = true;
+                loginFragment = new LoginFragment();
+                getFragmentManager().beginTransaction().add(R.id.main_fragment, loginFragment).commit();
+            }
+        } else {
+            Log.d("location", "null:");
         }
     }
     @Override
     protected void onPause() {
-        super.onPause();
         if (googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
             googleApiClient.disconnect();
         }
+        super.onPause();
+
     }
 
     public Location getLastLocation() {
@@ -147,8 +159,10 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
 
     @Override
     protected void onStop() {
-        googleApiClient.disconnect();
+        if (googleApiClient.isConnected())
+            googleApiClient.disconnect();
         super.onStop();
+
     }
 
     @Override

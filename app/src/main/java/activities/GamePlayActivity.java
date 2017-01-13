@@ -5,14 +5,12 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.cdv.minesweeper_eilonlaor_dvirtwina.R;
 
-import logic.Compass;
 import logic.GameTimer;
 import logic.MineSweeper_Logic;
 import ui_enablers.GamePlay_UI_Enabler;
@@ -41,7 +39,7 @@ public class GamePlayActivity extends AppCompatActivity implements SensorEventLi
         this.logic = new MineSweeper_Logic(this, level, ui);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, sensor, sensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -69,7 +67,7 @@ public class GamePlayActivity extends AppCompatActivity implements SensorEventLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        this.finish();
+        Log.d("GamePlayActivity", "onBackPressed:");
     }
 
     public void startGame() {
