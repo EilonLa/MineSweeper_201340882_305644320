@@ -31,12 +31,11 @@ import fragments.LoginFragment;
 
 public class LoginActivity extends FragmentActivity implements LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
+    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     public static DBOperator database;
     public static Location lastLocation;
     private LocationRequest locationRequest;
     private GoogleApiClient googleApiClient;
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-
     private LoginFragment loginFragment;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +58,7 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        View view = findViewById(R.id.endLayout);
+        View view = findViewById(R.id.container);
         if (requestCode == 0) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Snackbar.make(view, "Location permission was granted. Connecting...",
