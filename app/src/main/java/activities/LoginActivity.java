@@ -42,6 +42,13 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
         Log.d("LoginActivity", "onCreate:");
         setContentView(R.layout.activity_main);
         database = new DBOperator(this);//sets the connection to the sqllite db
+
+        //googleApiClient.connect();
+        locationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -49,22 +56,17 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
                     .addApi(LocationServices.API)
                     .build();
         }
-        googleApiClient.connect();
-        locationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
-
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        Log.d("LoginActivity", "onRequestPermissionsResult:");
         View view = findViewById(R.id.container);
         if (requestCode == 0) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Snackbar.make(view, "Location permission was granted. Connecting...",
                         Snackbar.LENGTH_LONG)
                         .show();
-                onConnected(null);
+                googleApiClient.connect();
             } else {
                 Snackbar.make(view, "Location permission request was denied.",
                         Snackbar.LENGTH_LONG)
@@ -72,16 +74,21 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
             }
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!googleApiClient.isConnected())
+            googleApiClient.connect();
+    }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        Log.d("LoginActivity", "onConnected:");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //permission is availble
-            if (!googleApiClient.isConnected())
-                googleApiClient.connect();
             lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if ( lastLocation == null) {
-                while (!googleApiClient.isConnected()) {
-                }//wait until connection is complete
                 LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
             } else {
                 Toast.makeText(this, "Location saved! Lat=" +  lastLocation.getLatitude() + " long=" +  lastLocation.getLongitude(), Toast.LENGTH_LONG);
@@ -96,7 +103,8 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
     }
 
     public void requestPermissionToLocation() {
-        View view = findViewById(R.id.endLayout);
+        Log.d("LoginActivity", "requestPermissionToLocation:");
+        View view = findViewById(R.id.container);
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             Snackbar.make(view, "Location access is required ",
                     Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
@@ -118,6 +126,7 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
         }
     }
     public void locationGranted() {
+        Log.d("LoginActivity", "locationGranted:");
         if ( lastLocation != null) {
             loginFragment = new LoginFragment();
             getFragmentManager().beginTransaction().add(R.id.main_fragment, loginFragment).commit();
@@ -162,7 +171,7 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
     }
 
     private void handleNewLocation(Location location) {
-        Log.d("Location: ", location.toString());
+        Log.d("Location: ", "handleNewLocation");
         lastLocation = location;
         if (lastLocation != null)
             locationGranted();
