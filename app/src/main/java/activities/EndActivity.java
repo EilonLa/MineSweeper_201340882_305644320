@@ -24,6 +24,7 @@ public class EndActivity extends FragmentActivity {
     private int score;
     private Location lastLocation;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
