@@ -2,8 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
     android:background="@drawable/background"
     android:scaleType = "centerCrop"
+    android:id="@+id/rl_login"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -87,6 +89,15 @@
             android:gravity="center"
             android:textSize="16dip"/>
 
+        <!--<view-->
+            <!--android:id="@+id/compass_login"-->
+            <!--android:layout_gravity="left"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentstart="true"-->
+            <!--android:layout_marginEnd="14dp"-->
+            <!--android:layout_marginBottom="12dp"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"/>-->
 
 
     </LinearLayout>

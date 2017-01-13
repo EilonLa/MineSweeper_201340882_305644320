@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/background"
+    android:id="@+id/endLayout"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:id="@+id/endImageView"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/blast"
+            />
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/fireworks1"
+            android:layout_alignRight="@id/endImageView"/>
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/fireworks2"
+            android:layout_alignBottom="@id/endImageView"/>
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/fireworks3"
+            android:layout_alignParentLeft="true"/>
+
+
+        <TextView
+            android:id="@+id/finalScore"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@string/auth_google_play_services_client_google_display_name"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            android:theme="@style/finalScore"
+            android:gravity="center"
+            android:layout_below="@id/endImageView"
+            android:layout_gravity="center_horizontal" />
+        <Button
+            android:id="@+id/btn_scores_end"
+            android:layout_below="@id/finalScore"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
+            android:padding="0dp"
+            android:src="@mipmap/highscores"/>
+
+        <Button
+            android:id="@+id/btn_play_again"
+            android:layout_below="@id/finalScore"
+            android:layout_alignEnd="@+id/finalScore"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="right"
+            android:padding="0dp"
+            />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentPlace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+
+    <!--<view-->
+        <!--android:id="@+id/compass_win"-->
+        <!--android:layout_gravity="left"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentstart="true"-->
+        <!--android:layout_marginEnd="14dp"-->
+        <!--android:layout_marginBottom="12dp"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"/>-->
+
+</RelativeLayout>
+
+
+
+<!--</RelativeLayout>-->

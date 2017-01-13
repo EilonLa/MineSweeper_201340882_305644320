@@ -1,33 +1,47 @@
 package db;
 
+
 /**
  * Created by אילון on 30/11/2016.
  */
 
 public class DataRow {
-    public static final int NUMBER_GEN = 1;
-    public static int numberGen = NUMBER_GEN;
     private String mName;
     private int level;
     private int score;
+    private String lat;
+    private String longt;
 
-
-    public DataRow(String name,int level, int score) {
+    public DataRow(String name, int level, int score, double lat, double longT) {
         mName = name;
         this.score = score;
         this.level = level;
+        this.lat = String.valueOf(lat);
+        this.longt = String.valueOf(longT);
     }
 
-    public DataRow(int id, String name,int level, int score) {
+    public DataRow(int id, String name,int level, int score, double lat, double longT) {
         mName = name;
         this.score = score;
+        this.level = level;
+        this.lat = String.valueOf(lat);
+        this.longt = String.valueOf(longT);
     }
 
     public DataRow(DataRow other) {
         if (other != null) {
             this.level = other.getLevel();
             this.mName = other.getmName();
+            this.lat = other.getLatidude();
+            this.longt = other.getLongtitude();
         }
+    }
+    public String getLongtitude() {
+        return longt;
+    }
+
+    public String getLatidude() {
+        return lat;
     }
 
     public String getmName() {
@@ -53,5 +67,4 @@ public class DataRow {
     public void setScore(int score){
         this.score = score;
     }
-
 }

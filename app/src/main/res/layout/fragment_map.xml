@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true">
+
+<!--<android.support.v7.widget.Toolbar-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/map_toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="?attr/actionBarSize"-->
+    <!--android:background="@color/colorPrimary"-->
+    <!--android:elevation="4dp"-->
+    <!--android:theme="@style/ThemeOverlay.AppCompat.ActionBar"-->
+    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+    <!--app:title="Mine logic map"-->
+    <!--app:titleTextColor="@android:color/white">-->
+
+
+
+
+
+<!--</android.support.v7.widget.Toolbar>-->
+
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rl_mapFragment"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:scaleType="centerCrop"
+                        android:fitsSystemWindows="true">
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:fabSize="mini"
+                app:srcCompat="@mipmap/back"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="12dp"
+                android:id="@+id/back_map"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/back_map"
+                android:gravity="right"
+                android:background="@color/wallet_bright_foreground_holo_dark"
+                android:layout_marginBottom="14dp"
+                android:id="@+id/compass"
+                android:orientation="horizontal"/>
+
+        </RelativeLayout>
+
+
+
+
+        <!--<view-->
+            <!--android:id="@+id/compass_map"-->
+            <!--android:layout_gravity="left"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_marginEnd="14dp"-->
+            <!--android:layout_marginBottom="12dp"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"/>-->
+    </fragment>
+
+</RelativeLayout>

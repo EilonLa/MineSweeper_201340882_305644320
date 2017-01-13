@@ -1,61 +1,79 @@
 package activities;
 
+import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
-import db.DBOperator;
-import db.DataRow;
 import com.example.cdv.minesweeper_eilonlaor_dvirtwina.R;
 
-import ui_package.End_UI_Enabler;
+import db.DataRow;
+import ui_enablers.End_UI_Enabler;
 
 /**
  * Created by אילון on 28/11/2016.
  */
 
-public class EndActivity extends AppCompatActivity {
-    private DataRow newDr;
-    private DBOperator dataBase;
+public class EndActivity extends FragmentActivity {
+    private final int defaultGameLevel = 2;
+    private final int defaultScore = 1;
+
     private String name;
     private int level;
     private int score;
+    private Location lastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.win);
-        dataBase = new DBOperator(getApplicationContext());
+        Log.d("EndActivity", "onCreate:");
+        setContentView(R.layout.activity_win);
         this.name = getIntent().getStringExtra("player_name");
-        this.level= getIntent().getIntExtra("Level" ,2);
-        this.score = getIntent().getIntExtra("Score" ,1);
+        this.level = getIntent().getIntExtra("Level", defaultGameLevel);
+        this.score = getIntent().getIntExtra("Score", defaultScore);
+        this.lastLocation = LoginActivity.lastLocation;
         insertIntoDataBase();
-        checkHighScore();
+
+        DataRow row = LoginActivity.database.getHighScoreFromDB(level);
+        if (row != null) {
+            if (row.getScore() >= score) {//win
+                new End_UI_Enabler(this, true, score);
+            } else {//lose
+                new End_UI_Enabler(this, false, score);
+            }
+        } else//first game on this level
+            new End_UI_Enabler(this, true, score);
     }
 
-    public void insertIntoDataBase() {
-        DataRow lastGame = dataBase.getLastGameFromDB();
-        newDr = new DataRow(lastGame );
-        if (newDr.getLevel() == 0){//first game on this level
-            newDr.setmName(name);
-            newDr.setScore(score);
-            newDr.setLevel(level);
+    public void insertIntoDataBase(){
+        Log.d("EndActivity", "insertIntoDataBase:");
+        if (lastLocation != null) {
+            LoginActivity.database.addRow(new DataRow(name, level, score, lastLocation.getLatitude(), lastLocation.getLongitude()));
+            Log.d("EndActivity", "location is valid:");
         }
-
-        dataBase.addRow(newDr);
-    }
-    public void checkHighScore(){
-        DataRow row = dataBase.getHighScoreFromDB(level);
-        if (row != null){
-            if (row.getScore() >= score)
-                new End_UI_Enabler(this, true,score);
-            else
-                new End_UI_Enabler(this, false,score);
+        else {
+            LoginActivity.database.addRow(new DataRow(name, level, score, 0, 0));
+            Log.d("EndActivity", "location is null:");
         }
-        else
-            new End_UI_Enabler(this, true,score);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
-    public String getPlayerName(){return name;}
+    @Override
+    public void onBackPressed() {
+        Log.d("endActivity", "onBackPressed:");
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
+    }
 
-    public int getLevel(){return level;}
+    public String getPlayerName() {
+        return name;
+    }
+
+    public int getLevel() {
+        return level;
+    }
 }
