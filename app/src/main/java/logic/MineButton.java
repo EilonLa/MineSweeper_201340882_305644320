@@ -10,11 +10,13 @@ import activities.GamePlayActivity;
 import ui_enablers.GamePlay_UI_Enabler;
 
 /**
- * Created by אילון on 20/11/2016.
+ * Created by eilon & dvir on 20/11/2016.
  */
 
 
 public class MineButton extends Button {
+    private final int flagId;
+    private final int explodedId;
     private int hiddenIconId;
     private int showIconId;
     private int row;
@@ -23,8 +25,6 @@ public class MineButton extends Button {
     private MineSweeper_Logic logic;
     private GamePlayActivity activity;
     private GamePlay_UI_Enabler ui;
-    private final int flagId;
-    private final int explodedId;
     private boolean pressed = false;
     private boolean longPressed = false;
     private boolean explodedMine = false;

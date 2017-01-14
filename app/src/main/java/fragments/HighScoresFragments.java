@@ -1,9 +1,9 @@
 package fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +23,7 @@ import db.DataRow;
 import ui_enablers.End_UI_Enabler;
 
 /**
- * Created by אילון on 20/12/2016.
+ * Created by eilon & dvir on 20/12/2016.
  */
 
 public class HighScoresFragments extends Fragment {

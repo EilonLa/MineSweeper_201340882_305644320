@@ -16,7 +16,7 @@ import activities.LoginActivity;
 import fragments.HighScoresFragments;
 
 /**
- * Created by אילון on 30/11/2016.
+ * Created by eilon & dvir on 30/11/2016.
  */
 
 public class End_UI_Enabler {

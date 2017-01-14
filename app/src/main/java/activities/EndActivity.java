@@ -11,7 +11,7 @@ import db.DataRow;
 import ui_enablers.End_UI_Enabler;
 
 /**
- * Created by אילון on 28/11/2016.
+ * Created by eilon & dvir on 28/11/2016.
  */
 
 public class EndActivity extends FragmentActivity {

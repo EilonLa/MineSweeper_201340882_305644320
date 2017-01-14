@@ -16,7 +16,7 @@ import logic.MineSweeper_Logic;
 import ui_enablers.GamePlay_UI_Enabler;
 
 /**
- * Created by אילון on 26/11/2016.
+ * Created by eilon & dvir on 26/11/2016.
  */
 
 public class GamePlayActivity extends AppCompatActivity implements SensorEventListener {

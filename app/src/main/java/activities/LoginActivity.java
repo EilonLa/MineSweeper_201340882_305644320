@@ -25,7 +25,7 @@ import db.DBOperator;
 import fragments.LoginFragment;
 
 /**
- * Created by אילון on 26/11/2016.
+ * Created by eilon & dvir on 26/11/2016.
  */
 
 public class LoginActivity extends FragmentActivity implements LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{

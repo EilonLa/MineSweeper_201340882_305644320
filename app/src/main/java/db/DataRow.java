@@ -2,7 +2,7 @@ package db;
 
 
 /**
- * Created by אילון on 30/11/2016.
+ * Created by eilon & dvir on 30/11/2016.
  */
 
 public class DataRow {
@@ -48,16 +48,16 @@ public class DataRow {
         return mName;
     }
 
+    public void setmName(String mName) {
+        this.mName = mName;
+    }
+
     public int getLevel(){
         return this.level;
     }
 
     public void setLevel(int level){
         this.level = level;
-    }
-
-    public void setmName(String mName) {
-        this.mName = mName;
     }
 
     public int getScore(){

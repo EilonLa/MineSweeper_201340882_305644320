@@ -2,15 +2,11 @@ package db;
 
 import android.provider.BaseColumns;
 
-import db.DBOperator;
-
 /**
- * Created by אילון on 29/11/2016.
+ * Created by eilon & dvir on 29/11/2016.
  */
 
 public final class FeedReaderContract {
-    public DBOperator db;
-
     public static final String CREATE_TABLE =
             "CREATE TABLE IF NOT EXISTS " + FeedScore.TABLE_NAME +
                     " (" + FeedScore.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -20,8 +16,8 @@ public final class FeedReaderContract {
                     FeedScore.COLUMN_NAME_LAT + " TEXT, " +
                     FeedScore.COLUMN_NAME_LONG + " TEXT" +
                     ")";
-
     public static final String DELETE_SCORE_TABLE = "DROP TABLE IF EXISTS " + FeedScore.TABLE_NAME;
+    public DBOperator db;
 
     private FeedReaderContract() {
     }

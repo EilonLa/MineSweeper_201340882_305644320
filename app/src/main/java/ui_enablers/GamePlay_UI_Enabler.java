@@ -23,7 +23,7 @@ import logic.MineButton;
 import logic.MineSweeper_Logic;
 
 /**
- * Created by אילון on 20/11/2016.
+ * Created by eilon & dvir on 20/11/2016.
  */
 
 public class GamePlay_UI_Enabler {

@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.view.View;
 
 /**
- * Created by eilon on 07/01/2017.
+ * Created by eilon & dvir on 07/01/2017.
  */
 
 public class Compass extends View {

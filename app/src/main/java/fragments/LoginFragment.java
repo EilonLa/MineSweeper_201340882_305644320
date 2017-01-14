@@ -18,7 +18,7 @@ import activities.LoginActivity;
 import db.DataRow;
 
 /**
- * Created by אילון on 21/12/2016.
+ * Created by eilon & dvir on 21/12/2016.
  */
 
 public class LoginFragment extends Fragment {

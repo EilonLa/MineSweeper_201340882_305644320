@@ -8,30 +8,30 @@ import java.util.TimerTask;
 import activities.GamePlayActivity;
 
 /**
- * Created by אילון on 26/11/2016.
+ * Created by eilon & dvir on 26/11/2016.
  */
 
 public class GameTimer implements Runnable {
+    private static final Handler handler = new Handler();
+    private static final Handler sensorHandler = new Handler();
     private static Timer timer;
     private static TimerTask timerTask;
-    private GamePlayActivity activity;
     private static Timer sensorTimer;
     private static TimerTask sensorTimerTask;
     private static int sensorTimeLeft = 0;
     private static int sensorTimeRight = 0;
     private static int sensorTimeFront = 0;
     private static int sensorTimeback = 0;
-    private boolean rightIsTilted  = false;
-    private boolean leftIsTilted = false;
-    private boolean frontIsTilted  = false;
-    private boolean backIsTilted = false;
     private static boolean paused = false;
     private static int rightSeconds = 0;
     private static int leftSeconds = 0;
     private static int rightMin = 0;
     private static int leftMin = 0;
-    private static final Handler handler = new Handler();
-    private static final Handler sensorHandler = new Handler();
+    private GamePlayActivity activity;
+    private boolean rightIsTilted = false;
+    private boolean leftIsTilted = false;
+    private boolean frontIsTilted = false;
+    private boolean backIsTilted = false;
     public GameTimer(GamePlayActivity activity) {
         this.activity = activity;
     }
@@ -47,7 +47,7 @@ public class GameTimer implements Runnable {
     }
 
     public void pause(boolean paused) {
-        this.paused = paused;
+        GameTimer.paused = paused;
     }
 
     public void initializeTimerTask() {

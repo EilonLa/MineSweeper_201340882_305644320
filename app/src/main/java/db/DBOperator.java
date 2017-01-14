@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 /**
- * Created by אילון on 29/11/2016.
+ * Created by eilon & dvir on 29/11/2016.
  */
 
 public class DBOperator extends SQLiteOpenHelper {
