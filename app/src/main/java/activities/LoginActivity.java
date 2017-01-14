@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.cdv.minesweeper_eilonlaor_dvirtwina.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -76,7 +77,6 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
             }
         }
     }
-
     @Override
     protected void onResume() {
         Log.d("LoginActivity", "onResume:");
@@ -85,21 +85,22 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
             googleApiClient.connect();
     }
 
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.d("LoginActivity", "onConnected:");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Log.d("onConnected", "checkSelfPermission=true:");
-
             //permission is availble
             lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if ( lastLocation == null) {
                 Log.d("lastLocation", "null");
                 LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
-            } else {//first else
+            } else {
                 Log.d("onConnected", "lastLocation not null");
                 locationGranted();
+            }
+            if (lastLocation == null) {
+                Toast.makeText(this, "Check location settings for your device", Toast.LENGTH_LONG).show();
             }
         } else {
             Log.d("onConnected", "requestPermissionToLocation");
