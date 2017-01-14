@@ -28,15 +28,19 @@ import logic.MineSweeper_Logic;
 
 public class GamePlay_UI_Enabler {
 
+    public static GridLayout grid;
+    private static LinearLayout board;
+    private static RelativeLayout upperRow;
+    private static MineButton[][] buttons;
+    private static int[] numbersIcons = {R.mipmap.zero, R.mipmap.one, R.mipmap.two, R.mipmap.three, R.mipmap.four,
+            R.mipmap.five, R.mipmap.six, R.mipmap.seven, R.mipmap.eight};
+    public boolean initiated = false;
     private GamePlayActivity activity;
     private MineSweeper_Logic logic;
     private TextView textView_timer = null;
     private TextView textView_numOfMines = null;
     private TextView textView_playerName = null;
     private String playerName;
-    public static GridLayout grid;
-    private static LinearLayout board;
-    private static RelativeLayout upperRow;
     private Button restartButton;
     private ObjectAnimator rotator;
     private Handler handler;
@@ -45,11 +49,6 @@ public class GamePlay_UI_Enabler {
     private int startingColToFillMines = 0;
     private int startingRowToFillMinesFromBottom = 0;
     private int startingColToFillMinesFromTheRight = 0;
-    private static MineButton[][] buttons;
-    private static int[] numbersIcons = {R.mipmap.zero, R.mipmap.one, R.mipmap.two, R.mipmap.three, R.mipmap.four,
-            R.mipmap.five, R.mipmap.six, R.mipmap.seven, R.mipmap.eight};
-
-    public boolean initiated = false;
     private boolean showedAll = false;
 
     public GamePlay_UI_Enabler(final GamePlayActivity activity, final MineSweeper_Logic logic) {
@@ -67,6 +66,10 @@ public class GamePlay_UI_Enabler {
         this.restartButton = (Button) this.activity.findViewById(R.id.restartButton);
         textView_numOfMines = (TextView) this.activity.findViewById(R.id.numOfMines);
         setRestartButton();
+    }
+
+    public static MineButton[][] getButtons() {
+        return buttons;
     }
 
     public void setNumOfMinesTextView() {
@@ -142,10 +145,6 @@ public class GamePlay_UI_Enabler {
             else
                 buttons[row][col].setIcon(R.mipmap.hidden);
         }
-    }
-
-    public static MineButton[][] getButtons() {
-        return buttons;
     }
 
     public int[] getNumbersIcons() {
@@ -224,6 +223,7 @@ public class GamePlay_UI_Enabler {
             oy.start();
         }
     }
+
 
     public void startToPlaceMines(boolean horizontal, boolean upToDown) {
         Log.d("GamePlay_UI_Enabler", "startToPlaceMines:");

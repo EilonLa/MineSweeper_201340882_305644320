@@ -8,12 +8,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.cdv.minesweeper_eilonlaor_dvirtwina.R;
+
 import activities.EndActivity;
 import activities.GamePlayActivity;
-import fragments.HighScoresFragments;
 import activities.LoginActivity;
-
-import com.example.cdv.minesweeper_eilonlaor_dvirtwina.R;
+import fragments.HighScoresFragments;
 
 /**
  * Created by אילון on 30/11/2016.
@@ -59,11 +59,43 @@ public class End_UI_Enabler {
                 Intent intent = new Intent(activity, GamePlayActivity.class);
                 intent.putExtra("level", level);
                 intent.putExtra("name", playerName);
-                intent.putExtra("lat", LoginActivity.lastLocation.getLatitude());
-                intent.putExtra("long",LoginActivity.lastLocation.getLongitude());
+                if (LoginActivity.lastLocation != null) {
+                    intent.putExtra("lat", LoginActivity.lastLocation.getLatitude());
+                    intent.putExtra("long", LoginActivity.lastLocation.getLongitude());
+                } else {
+                    intent.putExtra("lat", 0);
+                    intent.putExtra("long", 0);
+                }
                 activity.startActivity(intent);
             }
         });
+    }
+
+    public static String setScoreToShow(int score) {
+        int temp = score;
+        StringBuilder stringBuilder = new StringBuilder("");
+        if (score >= 1000) {
+            stringBuilder.append(temp / 1000);
+            stringBuilder.append(temp / 100);
+            stringBuilder.append(":");
+            stringBuilder.append((temp / 10) % 10);
+            stringBuilder.append(temp & 10);
+        }
+        if (score >= 100 && score < 1000) {
+            temp = score;
+            stringBuilder.append('0');
+            stringBuilder.append(temp / 100);
+            stringBuilder.append(":");
+            stringBuilder.append((temp / 10) % 10);
+            stringBuilder.append(temp & 10);
+        }
+        if (score < 100 && score >= 10) {
+            stringBuilder.append("00:" + score);
+        }
+        if (score < 10)
+            stringBuilder.append("00:0" + score);
+
+        return stringBuilder.toString();
     }
 
     public void showScore() {
@@ -97,33 +129,5 @@ public class End_UI_Enabler {
         blast.setBackgroundResource(R.drawable.blast);
         fireWorksAnim = (AnimationDrawable) blast.getBackground();
         fireWorksAnim.start();
-    }
-
-
-    public static String setScoreToShow(int score) {
-        int temp = score;
-        StringBuilder stringBuilder = new StringBuilder("");
-        if (score >= 1000) {
-            stringBuilder.append(temp / 1000);
-            stringBuilder.append(temp / 100);
-            stringBuilder.append(":");
-            stringBuilder.append((temp / 10) % 10);
-            stringBuilder.append(temp & 10);
-        }
-        if (score >= 100 && score < 1000) {
-            temp = score;
-            stringBuilder.append('0');
-            stringBuilder.append(temp / 100);
-            stringBuilder.append(":");
-            stringBuilder.append((temp / 10) % 10);
-            stringBuilder.append(temp & 10);
-        }
-        if (score < 100 && score >= 10) {
-            stringBuilder.append("00:" + score);
-        }
-        if (score < 10)
-            stringBuilder.append("00:0" + score);
-
-        return stringBuilder.toString();
     }
 }

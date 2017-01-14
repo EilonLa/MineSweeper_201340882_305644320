@@ -68,6 +68,7 @@ public class GamePlayActivity extends AppCompatActivity implements SensorEventLi
     public void onBackPressed() {
         super.onBackPressed();
         Log.d("GamePlayActivity", "onBackPressed:");
+        this.finish();
     }
 
     public void startGame() {
@@ -106,6 +107,8 @@ public class GamePlayActivity extends AppCompatActivity implements SensorEventLi
         i.putExtra("Score", gameTimer.getScore());
         i.putExtra("player_name", playerName);
         startActivity(i);
+        gameTimer.pause(true);
+        this.finish();
     }
 
     @Override

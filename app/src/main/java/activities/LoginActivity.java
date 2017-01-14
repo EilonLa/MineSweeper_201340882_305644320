@@ -13,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.cdv.minesweeper_eilonlaor_dvirtwina.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -80,6 +79,7 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
 
     @Override
     protected void onResume() {
+        Log.d("LoginActivity", "onResume:");
         super.onResume();
         if (!googleApiClient.isConnected())
             googleApiClient.connect();
@@ -90,20 +90,19 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
     public void onConnected(@Nullable Bundle bundle) {
         Log.d("LoginActivity", "onConnected:");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Log.d("onConnected", "checkSelfPermission=true:");
+
             //permission is availble
             lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if ( lastLocation == null) {
                 Log.d("lastLocation", "null");
                 LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
-            } else {
-                Toast.makeText(this, "Location saved! Lat=" + lastLocation.getLatitude() + " long=" + lastLocation.getLongitude(), Toast.LENGTH_LONG).show();
+            } else {//first else
+                Log.d("onConnected", "lastLocation not null");
                 locationGranted();
             }
-            if ( lastLocation != null) {
-            } else {
-                Toast.makeText(this, "cant use location on this device", Toast.LENGTH_LONG).show();
-            }
         } else {
+            Log.d("onConnected", "requestPermissionToLocation");
             requestPermissionToLocation();
         }
     }
@@ -145,6 +144,7 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
     }
     @Override
     protected void onPause() {
+        Log.d("LoginActivity", "onPause:");
         if (googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
             googleApiClient.disconnect();
@@ -159,6 +159,8 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
 
     @Override
     protected void onStop() {
+        Log.d("LoginActivity", "onStop:");
+
         if (googleApiClient.isConnected())
             googleApiClient.disconnect();
         super.onStop();
@@ -167,11 +169,13 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
 
     @Override
     public void onConnectionSuspended(int i) {
+        Log.d("LoginActivity", "onConnectionSuspended:");
 
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d("LoginActivity", "onConnectionFailed:");
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
@@ -185,22 +189,29 @@ public class LoginActivity extends FragmentActivity implements LocationListener,
     }
 
     private void handleNewLocation(Location location) {
-        Log.d("Location: ", "handleNewLocation");
+        Log.d("LoginActivity: ", "handleNewLocation");
         lastLocation = location;
         if (lastLocation != null)
             locationGranted();
     }
     @Override
     public void onLocationChanged(Location location) {
+        Log.d("LoginActivity: ", "onLocationChanged");
         handleNewLocation(location);
     }
 
     public void startGame(int level, String name) {
+        Log.d("LoginActivity: ", "onLocationChanged");
         Intent intent = new Intent(getApplicationContext(), GamePlayActivity.class);
         intent.putExtra("level", level);
         intent.putExtra("name", name);
-        intent.putExtra("lat",lastLocation.getLatitude());
-        intent.putExtra("long",lastLocation.getLongitude());
+        if (lastLocation != null) {
+            intent.putExtra("lat", lastLocation.getLatitude());
+            intent.putExtra("long", lastLocation.getLongitude());
+        } else {
+            intent.putExtra("lat", 0);
+            intent.putExtra("long", 0);
+        }
         startActivity(intent);
     }
 }

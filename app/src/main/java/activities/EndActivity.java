@@ -1,6 +1,5 @@
 package activities;
 
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -66,8 +65,8 @@ public class EndActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         Log.d("endActivity", "onBackPressed:");
-        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(i);
+        super.onBackPressed();
+        this.finish();
     }
 
     public String getPlayerName() {
