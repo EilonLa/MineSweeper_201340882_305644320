@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment {
 
         public Login_UI_Enabler(final LoginActivity activity, DataRow lastGame) {
             nameText = (EditText) activity.findViewById(R.id.nameText);
-            nameText.setText(defaultName);
+            nameText.setHint(defaultName);
             easy = (CheckBox) activity.findViewById(R.id.checkbox_easy);
             medium = (CheckBox) activity.findViewById(R.id.checkbox_medium);
             hard = (CheckBox) activity.findViewById(R.id.checkbox_hard);
