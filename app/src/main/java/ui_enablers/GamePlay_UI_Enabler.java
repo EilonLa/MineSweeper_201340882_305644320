@@ -183,6 +183,7 @@ public class GamePlay_UI_Enabler {
         blast.start();
         activity.getGameTimer().pause(true);
         dropAll(buttons[row][col]);
+
     }
 
     public void dropAll(final MineButton button) {
@@ -208,6 +209,14 @@ public class GamePlay_UI_Enabler {
                         }
                     }
                 }
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        grid.setBackgroundResource(R.drawable.splash);
+                        AnimationDrawable splash = (AnimationDrawable) grid.getBackground();
+                        splash.start();
+                    }
+                });
             }
         }, 1500);
         handler.postDelayed(new Runnable() {
