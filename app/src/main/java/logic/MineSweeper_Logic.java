@@ -55,7 +55,7 @@ public class MineSweeper_Logic {
     public void updateAroundTheButton(int row, int col) {
         if (row != 0 && col != 0 && intMatrix[row - 1][col - 1] != MINE) {
             intMatrix[row - 1][col - 1]++;
-            if (ui != null) {
+            if (ui != null && intMatrix[row - 1][col - 1] < ui.getNumbersIcons().length) {
                 ui.updateHiddenIconIdForButton(row - 1, col - 1, ui.getNumbersIcons()[intMatrix[row - 1][col - 1]]);
                 if (ui.getIsPressed(row - 1, col - 1))
                     ui.updateBackGroundIconForButton(row - 1, col - 1, ui.getNumbersIcons()[intMatrix[row - 1][col - 1]]);
@@ -111,7 +111,7 @@ public class MineSweeper_Logic {
         }
         if (col != 0 && intMatrix[row][col - 1] != MINE) {
             intMatrix[row][col - 1]++;
-            if (ui != null) {
+            if (ui != null && intMatrix[row][col - 1] < ui.getNumbersIcons().length) {
                 ui.updateHiddenIconIdForButton(row, col - 1, ui.getNumbersIcons()[intMatrix[row][col - 1]]);
                 if (ui.getIsPressed(row, col - 1))
                     ui.updateBackGroundIconForButton(row, col - 1, ui.getNumbersIcons()[intMatrix[row][col - 1]]);
@@ -210,9 +210,7 @@ public class MineSweeper_Logic {
                     minesMarked++;
             }
         }
-        if (minesMarked == totalNumOfMines)
-            return true;
+        return minesMarked == totalNumOfMines;
 
-        return false;
     }
 }

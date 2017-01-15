@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:background="@drawable/background"
-    android:scaleType = "centerCrop"
-    android:id="@+id/rl_login"
-    android:fitsSystemWindows="true">
+                android:id="@+id/rl_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/background"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop">
 
     <LinearLayout
         android:id="@+id/mainLinear"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="0dp"
+        android:orientation="vertical"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:paddingRight="24dp"
+        android:paddingTop="0dp">
 
-        <TextView android:src="@mipmap/mine"
+        <TextView
             android:id="@+id/welcome"
             android:layout_width="200dp"
             android:layout_height="110dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="0dp"
-            android:layout_gravity="center_horizontal" />
+            android:src="@mipmap/mine"/>
 
         <Button
             android:id="@+id/btn_scores"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
             android:padding="0dp"
             android:src="@mipmap/highscores"/>
         <EditText
@@ -42,31 +43,31 @@
 
 
         <TextView
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="Please choose level:"
             android:textSize="20dp"
                 />
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:orientation="vertical">
             <CheckBox android:id="@+id/checkbox_easy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Easy"
-                android:onClick="onCheckboxClicked"/>
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:onClick="onCheckboxClicked"
+                      android:text="Easy"/>
             <CheckBox android:id="@+id/checkbox_medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medium"
-                android:onClick="onCheckboxClicked"/>
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:onClick="onCheckboxClicked"
+                      android:text="Medium"/>
             <CheckBox android:id="@+id/checkbox_hard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hard"
-                android:onClick="onCheckboxClicked"/>
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:onClick="onCheckboxClicked"
+                      android:text="Hard"/>
         </LinearLayout>
 
 
@@ -74,20 +75,20 @@
             android:id="@+id/btn_start"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="10dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="0dp"
             android:padding="12dp"
             />
 
 
         <TextView android:id="@+id/credits"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:text="Eilon Laor and Dvir Twina "
-            android:gravity="center"
-            android:textSize="16dip"/>
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="0dp"
+                  android:gravity="center"
+                  android:text="Press mine to start "
+                  android:textSize="16dip"/>
 
         <!--<view-->
             <!--android:id="@+id/compass_login"-->

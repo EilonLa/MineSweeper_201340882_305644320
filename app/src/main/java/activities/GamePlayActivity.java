@@ -1,66 +1,112 @@
 package activities;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.cdv.minesweeper_eilonlaor_dvirtwina.R;
 
+import java.util.Arrays;
+
 import logic.GameTimer;
 import logic.MineSweeper_Logic;
+import service.MyService;
 import ui_enablers.GamePlay_UI_Enabler;
 
 /**
  * Created by eilon & dvir on 26/11/2016.
  */
 
-public class GamePlayActivity extends AppCompatActivity implements SensorEventListener {
+public class GamePlayActivity extends AppCompatActivity implements MyService.MyServiceListener {
 
+    private static final String TAG = GamePlayActivity.class.getSimpleName();
+    public static GameTimer gameTimer;
     private final int defualtGameLevel = 2;
     private MineSweeper_Logic logic;
     private int level;
-    private GameTimer gameTimer;
     private GamePlay_UI_Enabler ui;
     private String playerName;
-    private Sensor sensor;
-    private SensorManager sensorManager;
+    private MyService myService;
+    private ServiceConnection serviceConnection;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("GamePlayActivity", "onCreate:");
         setContentView(R.layout.activity_game);
+
         this.level = getIntent().getIntExtra("level", defualtGameLevel);
         this.playerName = getIntent().getStringExtra("name");
         this.logic = new MineSweeper_Logic(this, level, ui);
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 startGame();
             }
         });
+
+        serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder serviceBinder) {
+                if (serviceBinder instanceof MyService.ServiceBinder) {
+                    setService(((MyService.ServiceBinder) serviceBinder).getService());
+                }
+                Log.d(TAG, "onServiceConnected: " + name);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                setService(null);
+                Log.d(TAG, "onServiceDisconnected: " + name);
+            }
+        };
+        boolean bindingSucceeded = bindService(new Intent(this, MyService.class), serviceConnection, Context.BIND_AUTO_CREATE);
+        Log.d(TAG, "onCreate: " + (bindingSucceeded ? "the binding succeeded..." : "the binding failed!"));
+    }
+
+    @Override
+    public void onSensorEvent(float[] values) {
+        Log.d(TAG, "onSensorEvent: " + Arrays.toString(values));
+    }
+
+    public void setService(MyService service) {
+        if (service != null) {
+            this.myService = service;
+            service.setListener(this);
+            service.startListening();
+        } else {
+            if (this.myService != null) {
+                this.myService.setListener(null);
+            }
+            this.myService = null;
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         gameTimer.pause(true);
-        sensorManager.unregisterListener(this);
+        if (myService != null) {
+            myService.stopListening();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(serviceConnection);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         gameTimer.pause(false);
-        if (sensorManager.getSensorList(Sensor.TYPE_GYROSCOPE).size() != 0) {
-            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+        if (myService != null) {
+            myService.startListening();
         }
     }
 
@@ -111,38 +157,38 @@ public class GamePlayActivity extends AppCompatActivity implements SensorEventLi
         this.finish();
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        switch (sensorEvent.sensor.getType()) {
-            //first get device orientation
-            case Sensor.TYPE_ACCELEROMETER:
-                float x = sensorEvent.values[0];
-                float y = sensorEvent.values[1];
-                float z = sensorEvent.values[2];
+//    @Override
+//    public void onSensorChanged(SensorEvent sensorEvent) {
+//        switch (sensorEvent.sensor.getType()) {
+//            //first get device orientation
+//            case Sensor.TYPE_ACCELEROMETER:
+//                float x = sensorEvent.values[0];
+//                float y = sensorEvent.values[1];
+//                float z = sensorEvent.values[2];
+//
+//                if (x > 5) {//right side of phone is lifting
+//                    gameTimer.setRightIsTilted(true);
+//                } else
+//
+//                    gameTimer.setRightIsTilted(false);
+//                if (x < -5) {// left side of phone is lifting
+//                    gameTimer.setLeftIsTilted(true);
+//                } else
+//                    gameTimer.setLeftIsTilted(false);
+//                if (y > 5) {// farthest side of phone is lifting
+//                    gameTimer.setFrontIsTilted(true);
+//                } else
+//                    gameTimer.setFrontIsTilted(false);
+//                if (y < -5) {// near side of phone is lifting
+//                    gameTimer.setBackIsTilted(true);
+//                } else
+//                    gameTimer.setBackIsTilted(false);
+//        }
+//    }
 
-                if (x > 5) {//right side of phone is lifting
-                    gameTimer.setRightIsTilted(true);
-                } else
-
-                    gameTimer.setRightIsTilted(false);
-                if (x < -5) {// left side of phone is lifting
-                    gameTimer.setLeftIsTilted(true);
-                } else
-                    gameTimer.setLeftIsTilted(false);
-                if (y > 5) {// farthest side of phone is lifting
-                    gameTimer.setFrontIsTilted(true);
-                } else
-                    gameTimer.setFrontIsTilted(false);
-                if (y < -5) {// near side of phone is lifting
-                    gameTimer.setBackIsTilted(true);
-                } else
-                    gameTimer.setBackIsTilted(false);
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-    }
+//    @Override
+//    public void onAccuracyChanged(Sensor sensor, int i) {
+//    }
 
     public GameTimer getGameTimer() {
         return gameTimer;
